@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 from django.db import models
 
 
@@ -60,3 +61,34 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class UserSubscription(models.Model):
+    subscriber = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='subscriptions',
+        on_delete=models.CASCADE
+    )
+    subscription = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='subscribers',
+        on_delete=models.CASCADE
+    )
+    subscribed_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='subscription date'
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['subscriber', 'subscription'],
+                name='unique_subscription',
+            )
+        ]
+        verbose_name = 'Subscription'
+        verbose_name_plural = 'Subscriptions'
+        ordering = ['-subscribed_at', 'id']
+
+    def __str__(self):
+        return f'{self.subscriber} - {self.subscription}'

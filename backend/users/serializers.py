@@ -1,43 +1,26 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import User
+from djoser.serializers import UserCreateSerializer
+
+from .models import UserSubscription
+# from .models import User
+User = get_user_model()
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(UserCreateSerializer):
+    is_subscribed = serializers.SerializerMethodField()
     class Meta:
         model = User
         fields = (
             'username', 'email', 'first_name',
-            'last_name', 'password')
+            'last_name', 'password', 'is_subscribed')
 
+    def get_is_subscribed(self, obj):
+        user = self.context['request'].user
+        if user.is_anonymous:
+            return False
+        return UserSubscription.objects.filter(
+            subscriber=user, subscription=obj
+        ).exists()
 
-class TokenSerializer(serializers.ModelSerializer):
-    email = serializers.SlugField()
-    password = serializers.SlugField()
-
-    class Meta:
-        model = User
-        fields = ('email', 'password')
-
-
-class SignUpSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ('email', 'username')
-
-    def validate(self, value):
-        if value['username'] == 'me':
-            raise serializers.ValidationError(
-                'Имя пользователя не может быть "me"!'
-            )
-        return value
-
-
-class NoStaffSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = (
-            'username', 'email', 'first_name',
-            'last_name', 'role')
-        read_only_fields = ('role',)
