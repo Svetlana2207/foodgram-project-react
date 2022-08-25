@@ -1,43 +1,22 @@
-# from django.contrib.auth import get_user_model
-# from rest_framework import serializers
-
-# from djoser.serializers import UserCreateSerializer, UserSerializer
-
-# from .models import UserSubscription
-# # from .models import User
-# User = get_user_model()
-
-
-# class UserSerializer(UserCreateSerializer):
-#     is_subscribed = serializers.SerializerMethodField()
-#     class Meta:
-#         model = User
-#         fields = (
-#             'username', 'email', 'first_name',
-#             'last_name', 'password', 'is_subscribed')
-
-#     def get_is_subscribed(self, obj):
-#         user = self.context['request'].user
-#         if user.is_anonymous:
-#             return False
-#         return UserSubscription.objects.filter(
-#             subscriber=user, subscription=obj
-#         ).exists()
-
-# class Cust
+from django.contrib.auth import get_user_model
 
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 from recipes.models import Recipe
-from users.models import Follow, User
+from users.models import Follow
+from djoser.conf import settings
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 class CustomUserCreateSerializer(UserCreateSerializer):
     class Meta:
         model = User
         fields = ('email', 'username', 'first_name', 'last_name', 'password')
+
+
 
 
 class CustomUserSerializer(UserSerializer):
