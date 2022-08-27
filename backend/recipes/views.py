@@ -1,46 +1,3 @@
-# from django.shortcuts import get_object_or_404
-# from django.http import HttpResponse
-# from rest_framework import status
-# from rest_framework.response import Response
-# from rest_framework import viewsets
-# from rest_framework.permissions import IsAuthenticated, AllowAny
-
-# from .models import Ingredient, Tag, Recipe
-# from .permissions import IsOwnerOrReadOnly
-# from .serializers import (RecipeReadSerializer, TagSerializer,
-#                          RecipeSerializer, IngredientSerializer,
-#                          RecipeReadSerializer)
-
-# class RecipeViewSet(viewsets.ModelViewSet):
-#     permission_classes = [IsAuthenticated & IsOwnerOrReadOnly]
-#     queryset = Recipe.objects.all()
-#     def get_serializer_class(self):
-#         if self.action in ('list', 'retrieve'):
-#             return RecipeReadSerializer
-#         return RecipeSerializer
-
-#     @staticmethod
-#     def post_method_for_action(request, pk, serializers):
-#         data = {'user': request.user.id, 'recipe': pk}
-#         serializer = serializers(data=data, context={'request': request})
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-# class TagViewSet(viewsets.ReadOnlyModelViewSet):
-#     pagination_class = None
-#     queryset = Tag.objects.all()
-#     serializer_class = TagSerializer
-
-
-# class IngredientViewSet(viewsets.ModelViewSet):
-#     pagination_class = None
-#     queryset = Ingredient.objects.all()
-#     #permission_classes = [IsAuthenticated & IsOwnerOrReadOnly]
-#     serializer_class = IngredientSerializer
-
-
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
@@ -86,7 +43,9 @@ class RecipeViewSet(ModelViewSet):
             return RecipeListSerializer
         return RecipeWriteSerializer
 
-    @action(detail=True, permission_classes=[IsAuthenticated])
+    @action(detail=True,
+            methods=['POST'],
+            permission_classes=[IsAuthenticated])
     def favorite(self, request, pk):
         data = {'user': request.user.id, 'recipe': pk}
         serializer = FavoriteSerializer(
@@ -106,7 +65,9 @@ class RecipeViewSet(ModelViewSet):
         favorite.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @action(detail=True, permission_classes=[IsAuthenticated])
+    @action(detail=True,
+            methods=['POST'],
+            permission_classes=[IsAuthenticated])
     def shopping_cart(self, request, pk):
         data = {'user': request.user.id, 'recipe': pk}
         serializer = ShoppingCartSerializer(
