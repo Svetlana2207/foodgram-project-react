@@ -1,12 +1,9 @@
-from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 from recipes.models import Recipe
-from users.models import Follow
-
-User = get_user_model()
+from .models import Follow, User
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):

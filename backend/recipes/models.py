@@ -1,9 +1,7 @@
-from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
 
-User = get_user_model()
-# from users.models import User
+from users.models import User
 
 
 class Tag(models.Model):
@@ -79,10 +77,14 @@ class Recipe(models.Model):
 
 class IngredientQuantity(models.Model):
     ingredient = models.ForeignKey(
-        Ingredient, on_delete=models.CASCADE, verbose_name='Ингредиент'
+        Ingredient,
+        related_name='ingredient_quantity',
+        on_delete=models.CASCADE, verbose_name='Ингредиент'
     )
     recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, verbose_name='Рецепт'
+        Recipe,
+        related_name='ingredient_quantity',
+        on_delete=models.CASCADE, verbose_name='Рецепт'
     )
     amount = models.PositiveSmallIntegerField(
         verbose_name='Количество',
