@@ -1,10 +1,7 @@
-from rest_framework import mixins
-from rest_framework import serializers
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-from rest_framework import status
+from django.shortcuts import get_object_or_404
+from rest_framework import mixins, serializers, status
 from rest_framework.response import Response
-
 
 # class AddDelViewMixin:
 
@@ -34,6 +31,3 @@ from rest_framework.response import Response
 #         if exists and self.request.method in ('DELETE',):
 #             manager.remove(obj)
 #             return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-

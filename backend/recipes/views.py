@@ -1,6 +1,6 @@
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.db.models import Sum
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
@@ -43,50 +43,6 @@ class RecipeViewSet(ModelViewSet):
         if self.action in ('list', 'retrieve'):
             return RecipeListSerializer
         return RecipeWriteSerializer
-
-    # @action(detail=True,
-    #         methods=['POST'],
-    #         permission_classes=[IsAuthenticated])
-    # def favorite(self, request, pk):
-    #     data = {'user': request.user.id, 'recipe': pk}
-    #     serializer = FavoriteSerializer(
-    #         data=data, context={'request': request}
-    #     )
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    # @favorite.mapping.delete
-    # def delete_favorite(self, request, pk):
-    #     user = request.user
-    #     recipe = get_object_or_404(Recipe, id=pk)
-    #     favorite = get_object_or_404(
-    #         Favorite, user=user, recipe=recipe
-    #     )
-    #     favorite.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
-
-    # @action(detail=True,
-    #         methods=['POST'],
-    #         permission_classes=[IsAuthenticated])
-    # def shopping_cart(self, request, pk):
-    #     data = {'user': request.user.id, 'recipe': pk}
-    #     serializer = ShoppingCartSerializer(
-    #         data=data, context={'request': request}
-    #     )
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    # @shopping_cart.mapping.delete
-    # def delete_shopping_cart(self, request, pk):
-    #     user = request.user
-    #     recipe = get_object_or_404(Recipe, id=pk)
-    #     shopping_cart = get_object_or_404(
-    #         ShoppingCart, user=user, recipe=recipe
-    #     )
-    #     shopping_cart.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
     @staticmethod
     def post_method_for_actions(request, pk, serializers):
@@ -131,10 +87,10 @@ class RecipeViewSet(ModelViewSet):
         ingredients = IngredientQuantity.objects.filter(
             recipe__shopping_carts__user=request.user).values(
             'ingredient__name', 'ingredient__measurement_unit').order_by(
-            'ingredient__name').annotate(ingredient_total=Sum('amount')
-        )
+            'ingredient__name').annotate(ingredient_total=Sum('amount'))
         shopping_cart = '\n'.join([
-            f'{ingredient["ingredient__name"]} - {ingredient["ingredient_total"]} '
+            f'{ingredient["ingredient__name"]} - '
+            f'{ingredient["ingredient_total"]} '
             f'{ingredient["ingredient__measurement_unit"]}'
             for ingredient in ingredients
         ])

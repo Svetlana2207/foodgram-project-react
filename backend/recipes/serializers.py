@@ -45,7 +45,8 @@ class RecipeListSerializer(serializers.ModelSerializer):
     author = CustomUserSerializer(read_only=True)
     is_favorited = serializers.SerializerMethodField(read_only=True)
     is_in_shopping_cart = serializers.SerializerMethodField(read_only=True)
-    ingredients = IngredientQuantitySerializer(many=True, source='ingredient_quantity')
+    ingredients = IngredientQuantitySerializer(many=True,
+                                               source='ingredient_quantity')
 
     class Meta:
         model = Recipe
@@ -123,28 +124,10 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
             IngredientQuantity.objects.create(
                 recipe=recipe, ingredient=ingredient_id, amount=amount
             )
-        # new_ingredients = [IngredientQuantity(
-        #     recipe=recipe,
-        #     ingredient=ingredient_data['ingredient'],
-        #     amount=ingredient_data['amount'],
-        #     )
-        #     for ingredient_data in ingredients
-        #     ]
-        # IngredientQuantity.objects.bulk_create(
-        #     new_ingredients)
 
     def create_tags(self, tags, recipe):
         for tag in tags:
             recipe.tags.add(tag)
-
-    # def create(self, validated_data):
-    #     author = self.context.get('request').user
-    #     tags = validated_data.pop('tags')
-    #     ingredients = validated_data.pop('ingredients')
-    #     recipe = Recipe.objects.create(author=author, **validated_data)
-    #     self.create_tags(tags, recipe)
-    #     self.create_ingredients(ingredients, recipe)
-    #     return recipe
 
     def create(self, validated_data):
         tags = validated_data.pop('tags')
@@ -164,12 +147,6 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
         return recipe
 
     def update(self, instance, validated_data):
-        # instance.image = validated_data.get('image', instance.image)
-        # instance.name = validated_data.get('name', instance.name)
-        # instance.text = validated_data.get('text', instance.text)
-        # instance.cooking_time = validated_data.get(
-        #     'cooking_time', instance.cooking_time
-        # )
         super().update(instance, validated_data)
         instance.tags.clear()
         tags = validated_data.get('tags')
