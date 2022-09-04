@@ -117,14 +117,6 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(INGREDIENTS_UNIQUE_ERROR)
         return data
 
-    def create_ingredients(self, ingredients, recipe):
-        for ingredient in ingredients:
-            ingredient_id = ingredient['id']
-            amount = ingredient['amount']
-            IngredientQuantity.objects.create(
-                recipe=recipe, ingredient=ingredient_id, amount=amount
-            )
-
     def create_tags(self, tags, recipe):
         for tag in tags:
             recipe.tags.add(tag)
@@ -156,7 +148,6 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
         ingredients = validated_data.get('ingredients')
         self.create_ingredients(ingredients, instance)
 
-        instance.save()
         return instance
 
     def to_representation(self, instance):
