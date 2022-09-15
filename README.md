@@ -2,9 +2,9 @@
 
 ![main.yml](https://github.com/Svetlana2207/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 
-#### Ссылка на проект: http://158.160.10.251/admin/
+#### Ссылка на проект: http://158.160.14.90/api/
 
-#### Документация к API проекта Foodgram: http://000.00.0.00/redoc/ 
+#### Документация к API проекта Foodgram: http://158.16.14.90/api/docs/ 
  
 
 ### Проект Fooodgram
@@ -42,9 +42,9 @@ docker-compose exec web python manage.py loaddata fixtures.json
 
 Для запуска на удаленном сервере необходимо:
 
-перенести файлы docker-compose.yaml и папку nginx на сервер, выполнив команду:
+перенести файлы docker-compose.yaml и nginx.conf на сервер, выполнив команду:
 
-scp -r ./infra/* <username>@<server_ip>:/home/<username>/
+scp <название файла> <username>@<server_ip>:/home/<username>/
 
 на github, в настройках репозитория Secrets --> Actions создать и заполнить переменные окружения:
 
