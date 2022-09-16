@@ -44,7 +44,7 @@ docker-compose exec web python manage.py loaddata fixtures.json
 
 перенести файлы docker-compose.yaml и nginx.conf на сервер, выполнив команду:
 
-scp <название файла> <username>@<server_ip>:/home/<usernamee>/
+scp <название файла> <username>@<server_ip>:/home/<username>/
 
 на github, в настройках репозитория Secrets --> Actions создать и заполнить переменные окружения:
 
