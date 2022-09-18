@@ -1,5 +1,4 @@
 from django.urls import include, path
-from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
 
 from users.views import FollowApiView, FollowListAPIView
@@ -11,10 +10,10 @@ urlpatterns = [
          name='subscribe'),
     path('users/subscriptions/', FollowListAPIView.as_view(),
          name='subscription'),
-#    path('docs/',
-#         TemplateView.as_view(template_name='docs/redoc.html'),
-#         name='redoc'
-#         ),
+    # path('docs/',
+    #     TemplateView.as_view(template_name='docs/redoc.html'),
+    #     name='redoc'
+    #     ),
     path('', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
     path('', include(router.urls)),
