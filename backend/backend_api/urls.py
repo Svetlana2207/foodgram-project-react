@@ -9,9 +9,9 @@ urlpatterns = [
     path('api/', include('recipes.urls')),
     path('api/', include('users.urls')),
     path('docs/',
-        TemplateView.as_view(template_name='docs/redoc.html'),
-        name='redoc'
-    ),
+         TemplateView.as_view(template_name='docs/redoc.html'),
+         name='redoc'
+         ),
 ]
 
 if settings.DEBUG:
