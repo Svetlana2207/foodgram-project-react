@@ -2,7 +2,7 @@
 
 ![main.yml](https://github.com/Svetlana2207/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 
-#### Ссылка на проект: http://158.160.14.90/api/
+#### Ссылка на проект: http://158.160.14.90/
 
 #### Документация к API проекта Foodgram: http://158.16.14.90/api/docs/ 
  
@@ -29,13 +29,15 @@ docker-compose up -d --build
 
 Собрать статику и выполнить миграции внутри контейнера, создать суперпользователя:
 
-docker-compose exec web python manage.py migrate --noinput
-docker-compose exec web python manage.py createsuperuser
-docker-compose exec web python manage.py collectstatic --no-input
+docker-compose exec backend python manage.py migrate --noinput
+
+docker-compose exec backend python manage.py createsuperuser
+
+docker-compose exec backend python manage.py collectstatic --no-input
 
 наполнить базу данных из файла фикстур:
 
-docker-compose exec web python manage.py loaddata fixtures.json
+docker-compose exec backend python manage.py loaddata fixtures.json
 
 
 ### Деплой на удаленном сервере:
@@ -44,7 +46,7 @@ docker-compose exec web python manage.py loaddata fixtures.json
 
 перенести файлы docker-compose.yaml и nginx.conf на сервер, выполнив команду:
 
-scp <название файла> <username>@<server_ip>:/home/<username>/
+scp <название файла> <username>@<server_ip>:/home/username/
 
 на github, в настройках репозитория Secrets --> Actions создать и заполнить переменные окружения:
 
