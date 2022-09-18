@@ -1,9 +1,9 @@
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
+from .models import (Favorite, Ingredient, IngredientQuantity,
+                     Recipe, ShoppingCart, Tag)
 from users.serializers import CustomUserSerializer
-from .models import (Favorite, Ingredient, IngredientQuantity, Recipe,
-                     ShoppingCart, Tag)
 
 TAGS_UNIQUE_ERROR = 'Теги не могут повторяться!'
 TAGS_EMPTY_ERROR = 'Выберите минимум один тег!'
