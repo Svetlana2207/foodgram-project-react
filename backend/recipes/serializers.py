@@ -130,13 +130,13 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
 #             ) for ingredient in ingredients
 #         ])
         
-    def create_ingredients(self, ingredients, recipe): 
-        for ingredient in ingredients: 
-            ingredient_id = ingredient['id'] 
-            amount = ingredient['amount'] 
-            IngredientQuantity.objects.create( 
-                recipe=recipe, ingredient=ingredient_id, amount=amount 
-            )  
+    def create_ingredients(self, ingredients, recipe):
+        for ingredient in ingredients:
+            ingredient_id = ingredient['id']
+            amount = ingredient['amount']
+            IngredientQuantity.objects.create(
+                recipe=recipe, ingredient=ingredient_id, amount=amount
+            )
 
     def create(self, validated_data):
         author = self.context.get('request').user
