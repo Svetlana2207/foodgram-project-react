@@ -151,7 +151,7 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
 
 #         return instance
 
-   def update(self, instance, validated_data):
+    def update(self, instance, validated_data):
         tags = validated_data.pop('tags')
         ingredients = validated_data.pop('ingredients')
         recipe = super().update(instance, validated_data)
