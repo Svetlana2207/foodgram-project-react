@@ -140,7 +140,6 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
         return recipe
 
     def update(self, instance, validated_data):
-#      super().update(instance, validated_data)
         instance.tags.clear()
         tags = validated_data.get('tags')
         self.create_tags(tags, instance)
@@ -149,7 +148,6 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
         ingredients = validated_data.get('ingredients')
         self.create_ingredients(ingredients, instance)
 
-#         return instance
         return super().update(instance, validated_data)
 
     def to_representation(self, instance):
