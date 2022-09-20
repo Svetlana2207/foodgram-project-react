@@ -3,6 +3,7 @@
 ![main.yml](https://github.com/Svetlana2207/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 
 #### Ссылка на проект: http://158.160.14.90/
+http://fooggram-ponomareva.ddns.net/
 
 суперпользователь root, пароль root, почта root@root.ru
 
