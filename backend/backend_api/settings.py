@@ -100,7 +100,7 @@ REST_FRAMEWORK = {
 DJOSER = {
     'HIDE_USERS': False,
     'LOGIN_FIELD': 'email',
-    'SET_PASSWORD_RETYPE': True,
+#     'SET_PASSWORD_RETYPE': True,
     'PERMISSIONS': {
         'user': ['djoser.permissions.CurrentUserOrAdminOrReadOnly'],
         'set_password': ['djoser.permissions.CurrentUserOrAdmin'],
