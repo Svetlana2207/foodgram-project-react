@@ -5,10 +5,6 @@
 #### Ссылка на проект: http://158.160.14.90/
 ####                   http://fooggram-ponomareva.ddns.net/
 
-суперпользователь root, пароль root, почта root@root.ru
-
-#### Документация к API проекта Foodgram: http://158.16.14.90/api/docs/ 
- 
 
 ### Проект Fooodgram
 Описание:
